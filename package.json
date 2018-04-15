@@ -15,10 +15,15 @@
     "axios": "0.17.x"
   },
   "scripts": {
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "test": "jest --config jest.config.js"
   },
   "devDependencies": {
-    "typescript": "2.7.x"
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^22.4.3",
+    "typescript": "2.7.x",
+    "vuex": "^3.0.1"
   },
   "files": [
     "dist",
