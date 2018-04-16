@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios"
+import QueryParser from "./QueryParser"
 
 export interface ResourceAction {
   requestFn: Function,
@@ -51,7 +52,45 @@ export class Resource {
     this.queryParams = options.queryParams || false
   }
 
-  add(options: ResourceActionOptions): Resource {
+  add(data: ResourceActionOptions | string) {
+    if (typeof data === "string") {
+      const query = data as string
+      return this.addWithQuery(query)
+    } else {
+      const options = data as ResourceActionOptions
+      return this.addWithResourceActionOptions(options)
+    }
+  }
+
+  addWithQuery(query: string): Resource {
+    const match = QueryParser.validate(query)
+
+    if (match === null) {
+      throw new Error(`The following query is invalid and can't be parsed.\n${query}`)
+    }
+
+    const queryComponents = QueryParser.parse(match)
+
+    const pathFn = (params: Object): string => {
+      const path = queryComponents.pathParams.reduce((prev, key) => {
+        if (params.hasOwnProperty(key) === false) {
+          throw new Error(`Parameter "${key}" is not defined. You have to provide a value.`)
+        }
+
+        return prev.replace(`:${key}`, params[key])
+      }, queryComponents.path)
+      return path
+    }
+
+    return this.addWithResourceActionOptions({
+      action: queryComponents.action,
+      method: queryComponents.method,
+      property: queryComponents.property,
+      path: pathFn
+    })
+  }
+
+  addWithResourceActionOptions(options: ResourceActionOptions): Resource {
     options.method = options.method || "get"
     options.requestConfig = options.requestConfig || {}
     options.property = options.property || null
