@@ -1,6 +1,5 @@
 import axios from "axios"
 import Resource from "../../dist/Resource"
-import Axios from "axios";
 
 test("commit strings will be transformed", () => {
   const commitStrings = new Map([
