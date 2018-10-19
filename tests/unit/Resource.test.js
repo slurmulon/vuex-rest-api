@@ -32,7 +32,7 @@ test("dispatch strings will be transformed", () => {
 describe("add", () => {
   describe("options", () => {
     const opts = { action: "foo"}
-    const resource = new Resource(opts).add(opts)
+    const resource = new Resource({}).add(opts)
 
     test("sets `method` to 'get' by default", () => {
       expect(opts.method).toBe("get")
@@ -44,6 +44,55 @@ describe("add", () => {
 
     test("sets `property` to `null` by default", () => {
       expect(opts.property).toBe(null)
+    })
+  })
+
+  describe("actions", () => {
+    describe("requestFn", () => {
+
+    })
+
+    describe("property", () => {
+      it("should be set to `options.property`", () => {
+        const opts = { action: "foo", property: "bar" }
+        const resource = new Resource({}).add(opts)
+
+        expect(resource.actions["foo"].property).toBe("bar")
+      })
+    })
+
+    describe("onSuccess", () => {
+      it("should be set to `options.onSuccess", () => {
+        const stub = () => {}
+        const opts = { action: "foo", onSuccess: stub }
+        const resource = new Resource({}).add(opts)
+
+        expect(resource.actions["foo"].onSuccess).toBe(stub)
+      })
+    })
+
+    describe("onError", () => {
+      it("should be set to `options.onError`", () => {
+        const stub = () => {}
+        const opts = { action: "foo", onError: stub }
+        const resource = new Resource({}).add(opts)
+
+        expect(resource.actions["foo"].onError).toBe(stub)
+      })
+    })
+
+    describe("dispatchString", () => {
+
+    })
+
+    describe("commitString", () => {
+
+    })
+
+    describe("axios", () => {
+      it("should be set to `this.axios`", () => {
+
+      })
     })
   })
 
