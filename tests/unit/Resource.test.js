@@ -57,7 +57,7 @@ describe("add", () => {
         const opts = { action: "foo", property: "bar" }
         const resource = new Resource({}).add(opts)
 
-        expect(resource.actions["foo"].property).toBe("bar")
+        expect(resource.actions[opts.action].property).toBe("bar")
       })
     })
 
@@ -67,7 +67,7 @@ describe("add", () => {
         const opts = { action: "foo", onSuccess: stub }
         const resource = new Resource({}).add(opts)
 
-        expect(resource.actions["foo"].onSuccess).toBe(stub)
+        expect(resource.actions[opts.action].onSuccess).toBe(stub)
       })
     })
 
@@ -77,21 +77,37 @@ describe("add", () => {
         const opts = { action: "foo", onError: stub }
         const resource = new Resource({}).add(opts)
 
-        expect(resource.actions["foo"].onError).toBe(stub)
+        expect(resource.actions[opts.action].onError).toBe(stub)
       })
     })
 
     describe("dispatchString", () => {
+      it("should be set to the result of `this.getDispatchString`", () => {
+        const opts = { action: "foo" }
+        const resource = new Resource({}).add(opts)
+        const should = resource.getDispatchString(opts.action)
 
+        expect(resource.actions[opts.action].dispatchString).toEqual(should)
+      })
     })
 
     describe("commitString", () => {
+      it("should be set to the result of `this.getCommitString`", () => {
+        const opts = { action: "foo" }
+        const resource = new Resource({}).add(opts)
+        const should = resource.getCommitString(opts.action)
 
+        expect(resource.actions[opts.action].commitString).toEqual(should)
+      })
     })
 
     describe("axios", () => {
       it("should be set to `this.axios`", () => {
+        const config = { axios: { fake: true } }
+        const opts = { action: "foo" }
+        const resource = new Resource(config).add(opts)
 
+        expect(resource.actions[opts.action].axios).toEqual(config.axios)
       })
     })
   })
