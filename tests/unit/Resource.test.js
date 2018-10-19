@@ -8,7 +8,7 @@ test("commit strings will be transformed", () => {
     ["cyber", "CYBER"]
   ])
 
-  const getCommitString = Resource.prototype.getCommitString
+  const { getCommitString } = Resource.prototype
 
   commitStrings.forEach((should, is) => {
     expect(getCommitString(is)).toBe(should)
@@ -22,10 +22,29 @@ test("dispatch strings will be transformed", () => {
     ["cyber", "cyber"]
   ])
 
-  const getDispatchString = Resource.prototype.getDispatchString
+  const { getDispatchString } = Resource.prototype
 
   dispatchStrings.forEach((should, is) => {
     expect(getDispatchString(is)).toBe(should)
+  })
+})
+
+describe("add", () => {
+  describe("options", () => {
+    const opts = { action: "foo"}
+    const resource = new Resource(opts).add(opts)
+
+    test("sets `method` to 'get' by default", () => {
+      expect(opts.method).toBe("get")
+    })
+
+    test("sets `requestConfig` to an empty object by default", () => {
+      expect(opts.requestConfig).toEqual({})
+    })
+
+    test("sets `property` to `null` by default", () => {
+      expect(opts.property).toBe(null)
+    })
   })
 })
 
