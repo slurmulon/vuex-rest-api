@@ -46,6 +46,14 @@ describe("add", () => {
       expect(opts.property).toBe(null)
     })
   })
+
+  test("illegal HTTP method", () => {
+    const opts = { action: "foo", method: "invalid" }
+    const resource = new Resource(opts)
+    const add = () => resource.add(opts)
+
+    expect(add).toThrowError(/Illegal HTTP method set/)
+  })
 })
 
 describe("normalizedBaseURL", () => {
