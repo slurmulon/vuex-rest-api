@@ -100,7 +100,7 @@ export class Resource {
       onError: options.onError,
       dispatchString: this.getDispatchString(options.action),
       commitString: this.getCommitString(options.action),
-      axios: this.axios      
+      axios: this.axios
     }
 
     return this
