@@ -1,3 +1,4 @@
 module.exports = {
-    testRegex: "/tests/.*\.js$"
+  testRegex: "/tests/.*\.js$",
+  testURL: "http://localhost"
 }
