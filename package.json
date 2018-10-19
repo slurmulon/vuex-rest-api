@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "test": "jest --config jest.config.js"
+    "test": "npm run build && jest --config jest.config.js"
   },
   "devDependencies": {
     "axios": "^0.18.0",
